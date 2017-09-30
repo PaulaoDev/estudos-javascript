@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <body>
+        <script type="module">
+            
+
+		import { App } from "./vendor/App.js";
+		var [ Router, Controller, View , Application ] = App.Build();
+
+		Router = Router.Build();
+		//Application = Application();
+
+		Application.set("default", "Paulao!!!");
+
+		Router.Pipeline("/").pipe(function(){
+		  	document.body.innerHTML += `Ola mundo ${Application.get(`default`)} !!`;
+		}).pipe(function(){
+		  	Controller.render("Root Controller!!", "font-size:50px")
+		}).pipe(
+			Controller.init
+		).listen();
+
+		Router.add("/teste/", function(){
+			console.log("Teste");
+		});
+
+		Router.Pipeline("/home/{msg}/{nova}").pipe((msg, nova) => {
+		  Controller.render(
+		  	`${msg} ${nova}`, 
+		  	`color:red;font-size:5em !important`
+		  );
+		}).listen();
+
+		try{
+			Router.dispatch();
+		}catch(e){
+			throw e.message;
+		}
+
+	
+        </script>
+    </body>
+</html>
