@@ -2,46 +2,31 @@
 <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
-        <title>Document</title>
+        <title>Router ES6</title>
     </head>
     <body>
-        <script type="module">
-            
+    	<script type="module" async>
 
-		import { App } from "./vendor/App.js";
-		var [ Router, Controller, View , Application ] = App.Build();
+    		"use strict";
 
-		Router = Router.Build();
-		//Application = Application();
+    		import { Router as RouterClass } from "http://localhost/src/Router.js";
 
-		Application.set("default", "Paulao!!!");
+    		;(async (window) => {
 
-		Router.Pipeline("/").pipe(function(){
-		  	document.body.innerHTML += `Ola mundo ${Application.get(`default`)} !!`;
-		}).pipe(function(){
-		  	Controller.render("Root Controller!!", "font-size:50px")
-		}).pipe(
-			Controller.init
-		).listen();
+    			const Router = RouterClass.create()
 
-		Router.add("/teste/", function(){
-			console.log("Teste");
-		});
+    			Router.any('/', async () => console.log("Init !!"))
+    			Router.any('/home', async () => console.log("Home !!"))
+    			Router.any('/perfil/{name}/{id}', async (param) => {
+    				document.body.innerHTML += `
+    					<h1>Perfil ${param["name"]} is ID ${param["id"]}</h1>
+    				`;
+    			})
 
-		Router.Pipeline("/home/{msg}/{nova}").pipe((msg, nova) => {
-		  Controller.render(
-		  	`${msg} ${nova}`, 
-		  	`color:red;font-size:5em !important`
-		  );
-		}).listen();
+    			Router.dispatch();
 
-		try{
-			Router.dispatch();
-		}catch(e){
-			throw e.message;
-		}
+    		})(window);
 
-	
-        </script>
+    	</script>
     </body>
 </html>
