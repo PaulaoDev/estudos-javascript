@@ -27,7 +27,7 @@ window.require = async(module) => {
 			var m = this.module_name,
 				context = this.context;
 			return (async(m, context) => {
-				var response = await fetch('./modules/khan_modules/' + m);
+				var response = await fetch('khan_modules/' + m);
         		var data = await response.text();
         		return new Function('', context(data))();
 			})(m, context);
