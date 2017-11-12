@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Modules TESTS</title>
+</head>
+<body>
+	<script src="./modules/src/loader.js"></script>
+	<script defer>
+		;(async () => {
+			var {assert, hello} = await require('app');
+			assert(typeof hello_world === "object", "Nao Existe hello_world mas sim hello!!");
+			hello();
+		})();
+	</script>
+</body>
+</html>
